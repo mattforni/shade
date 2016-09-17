@@ -7,6 +7,9 @@ module.exports = function(defaults) {
     // Add options here
   });
 
+  app.import('bower_components/js-sha256/build/sha256.min.js');
+  app.import('bower_components/soundcloud/build/sdk/sdk-3.1.2.js');
+
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //

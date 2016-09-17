@@ -1,0 +1,69 @@
+* {
+	color: #3a3e47;
+    font-family: museo-sans, "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin: 0px;
+}
+
+.grid {
+    background: #3a3e47;
+    float: left;
+    height: 33vw;
+    margin: 1%;
+    width: 31.2%;
+}
+
+#background {
+    background-image: url("https://i.ytimg.com/vi/5Xh9sDqeVkU/maxresdefault.jpg");
+    height: 100%;
+    width: 100%;
+    display:block;
+    padding: 0px;
+}
+
+body > .ember-view {
+    height: 100%;
+}
+
+html, body {
+    height: 100%;
+}
+
+.content {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+img.current-song {
+    height: 320px;
+    width: 320px;
+    border: 15px solid #f3f4f8;
+}
+
+#current-song-container {
+    display: inline-block;
+}
+
+#playlist-container {
+    display: inline-block;
+    margin-left: 60px;
+    width: 580px;
+    vertical-align: top;
+}
+
+ul {
+    padding: 0px;
+}
+
+.song-tile img {
+    height: 70px;
+    width: 70px;
+}
+
+li.song-tile {
+    background: #f3f4f8;
+    display: block;
+    height: 70px;
+    margin: 0 0 2px 0;
+    position: relative;
+    list-style: none
+}

@@ -1,0 +1,36 @@
+<h2>{{model.channel_name}}</h2>
+
+<div class="content">
+
+	<div id="current-song-container">
+		<div>
+			<h4 id="current-song-header">{{currentTrack.title}}</h4>
+		</div>
+		<img class="current-song" src="{{currentTrack.album_art_url}}">
+	</div>
+
+	<div id="playlist-container">
+		<form>
+			{{input value=searchBox placeholder="Search for songs or artist" key-up="search"}}
+		</form>
+		<ul>
+			{{#each model.tracks as |track|}}
+				<li class="song-tile">
+					<div>
+						<img src="{{track.album_art_url}}">
+						<p>{{track.name}}</p>
+						<button {{action 'play' track}}>Play</button>
+						<button {{action 'addToQueue' track}}>Queue</button>
+					</div>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+
+	{{#each searchResults as |searchResult|}}
+		<h4>{{searchResult.title}} - {{searchResult.user.username}}</h4>
+		<button {{action 'addToQueue' searchResult}}>Queue</button>
+		
+	{{/each}}
+
+</div>

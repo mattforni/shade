@@ -1,0 +1,7 @@
+<h2>New Channel</h2>
+<form>
+	<div class="form-group">
+		{{input type="text" class="form-control" value=channel_name placeholder="Channel Name"}}
+	</div>
+	<button {{action 'newChannel'}}>{{#link-to 'channel'}}Create{{/link-to}}</button>
+</form>

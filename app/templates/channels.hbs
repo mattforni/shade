@@ -1,0 +1,21 @@
+<div class="menu">
+  …
+  {{#if session.isAuthenticated}}
+    <a {{action 'invalidateSession'}}>Logout</a>
+  {{else}}
+    {{#link-to 'login'}}Login{{/link-to}}
+  {{/if}}
+</div>
+<div class="main">
+  {{outlet}}
+</div>
+
+<div id="background">
+	{{#each model as |channel|}}
+		{{#link-to "channel" channel.id class="grid"}}
+			<span class="grid-inner">
+				<h3 class="grid-text">{{channel.channel_name}}</h3>
+			</span>
+		{{/link-to}}
+	{{/each}}
+</div>
