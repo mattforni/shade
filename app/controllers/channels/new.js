@@ -14,12 +14,13 @@ export default Ember.Controller.extend({
 				id: channel_id,
 				channel_name: name,
 				timestamp: time,
-				members: {},
-				tracks: {}
+				members: [],
+				tracks: []
 			});
 
 			channel.save();
 			this.setProperties({channel_name: ''});
+			this.transitionToRoute("/channels/" + channel_id);
 		}
 	}
 });

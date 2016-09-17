@@ -4,6 +4,19 @@
     margin: 0px;
 }
 
+input[type="text"] {
+  padding: 10px;
+  margin-bottom: 5px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+  width: 558px;
+  font-size:24px;
+}
+
+.grid * {
+    color: #dcdcdc;
+}
+
 .grid {
     background: #3a3e47;
     float: left;
@@ -18,6 +31,7 @@
     width: 100%;
     display:block;
     padding: 0px;
+    background-size:100%;
 }
 
 body > .ember-view {
@@ -29,6 +43,8 @@ html, body {
 }
 
 .content {
+    padding-top: 30px;
+    padding-bottom: 30px;
     width: 1000px;
     margin: 0 auto;
 }
@@ -55,12 +71,53 @@ ul {
 }
 
 .song-tile img {
-    height: 70px;
     width: 70px;
+    height: 70px;
+}
+
+.track-image {
+    float: left;
+}
+
+.song-tile div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.song-tile .button-group {
+    float: right;
+}
+
+.button-group {
+    float: right;
+}
+
+a.button {
+    display: block;
+    text-align: center;
+    height: 70px;
+    width: 55px;
+    margin-left: 2px;
+    background: #f3f4f8;
+}
+
+.track-info {
+    float: left;
+    width: 380px;
+    padding: 5px;
+    margin-left:2px;
+    height: 60px;
+    background: #f3f4f8;
+}
+
+.track-info * {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 li.song-tile {
-    background: #f3f4f8;
     display: block;
     height: 70px;
     margin: 0 0 2px 0;

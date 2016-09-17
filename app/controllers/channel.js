@@ -38,6 +38,10 @@ export default Ember.Controller.extend({
 			        }
 			    }
 		    }, function(sound) {
+		    	console.log(sound.options);
+		    	if (sound.options === 'rtmp') {
+		    		sound.options.protocols.splice(0, 1);
+		    	}
 		    	sound.play();
 		    });
 		},
@@ -47,12 +51,22 @@ export default Ember.Controller.extend({
 				id: song.id,
 				name: song.title,
 				artist: song.user.username,
-				album_art_url: song.artwork_url
+				album_art_url: song.artwork_url,
+				votes: 1
 			});
 			console.log(track);
 			channel.get('tracks').pushObject(track);
 			channel.save();
 			track.save();
+		},
+		upVote: function(song) {
+			this.store.findRecord('track', song.id).then(function(track) {
+				var previous = track.get('votes');
+				console.log(track);
+				var v = (previous != null ? previous : 0) + 1;
+				track.set('votes', v);
+				track.save();
+			});
 		}
 	}
 });

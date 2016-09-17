@@ -1,36 +1,51 @@
 <h2>{{model.channel_name}}</h2>
 
-<div class="content">
+<div id="background" style="background-image:url({{currentTrack.album_art_url}}">
 
-	<div id="current-song-container">
-		<div>
-			<h4 id="current-song-header">{{currentTrack.title}}</h4>
+	<div class="content">
+
+		<div id="current-song-container">
+			<div>
+				<h4 id="current-song-header">{{currentTrack.title}}</h4>
+			</div>
+			<img class="current-song" src="{{currentTrack.album_art_url}}">
 		</div>
-		<img class="current-song" src="{{currentTrack.album_art_url}}">
-	</div>
 
-	<div id="playlist-container">
-		<form>
-			{{input value=searchBox placeholder="Search for songs or artist" key-up="search"}}
-		</form>
-		<ul>
-			{{#each model.tracks as |track|}}
-				<li class="song-tile">
-					<div>
-						<img src="{{track.album_art_url}}">
-						<p>{{track.name}}</p>
-						<button {{action 'play' track}}>Play</button>
-						<button {{action 'addToQueue' track}}>Queue</button>
-					</div>
-				</li>
-			{{/each}}
-		</ul>
-	</div>
+		<div id="playlist-container">
+			<form>
+				{{input value=searchBox placeholder="Search for songs or artist" key-up="search"}}
+			</form>
+			<ul>
+				{{#each model.tracks as |track|}}
+					<li class="song-tile">
+						<div>
+							<div class="track-image">
+								{{#if track.album_art_url}}
+									<img src="{{track.album_art_url}}">
+								{{else}}
+									<img src="http://jerzzy.co.uk/wp-content/themes/focusmagazine/images/thumbnail-default.jpg">
+								{{/if}}
+							</div>
+							<div class="track-info">
+								<h4>{{track.name}}</h4>
+								<label>{{track.artist}}</label>
+							</div>
+							<div class="button-group">
+								<div><a class="button" {{action 'play' track}}>Play</a></div>
+								<div><a class="button" {{action 'upVote' track}}>{{track.votes}}</a></div>
+							</div>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
 
-	{{#each searchResults as |searchResult|}}
-		<h4>{{searchResult.title}} - {{searchResult.user.username}}</h4>
-		<button {{action 'addToQueue' searchResult}}>Queue</button>
-		
-	{{/each}}
+		{{#each searchResults as |searchResult|}}
+			<h4>{{searchResult.title}} - {{searchResult.user.username}}</h4>
+			<button {{action 'addToQueue' searchResult}}>Queue</button>
+			
+		{{/each}}
+
+	</div>
 
 </div>
