@@ -92,7 +92,7 @@ ul {
     float: right;
 }
 
-a.button {
+div.button {
     display: block;
     text-align: center;
     height: 70px;
