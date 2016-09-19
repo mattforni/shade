@@ -99,6 +99,7 @@ div.button {
     width: 55px;
     margin-left: 2px;
     background: #f3f4f8;
+    cursor: pointer;
 }
 
 .track-info {

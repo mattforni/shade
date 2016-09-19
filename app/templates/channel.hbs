@@ -5,9 +5,11 @@
 	<div class="content">
 
 		<div id="current-song-container">
+			<!--
 			<div>
-				<h4 id="current-song-header">{{currentTrack.title}}</h4>
+				<h4 id="current-song-header">{{currentTrack.name}}</h4>
 			</div>
+			-->
 			<img class="current-song" src="{{currentTrack.album_art_url}}">
 		</div>
 
@@ -31,7 +33,7 @@
 								<label>{{track.artist}}</label>
 							</div>
 							<div class="button-group">
-								<div class="button" {{action 'play' track}}>Play</div>
+								<div class="button" {{action 'playTrack' track}}>Play</div>
 								<div class="button" {{action 'upVote' track}}>{{track.votes}}</div>
 							</div>
 						</div>
@@ -43,7 +45,6 @@
 		{{#each searchResults as |searchResult|}}
 			<h4>{{searchResult.title}} - {{searchResult.user.username}}</h4>
 			<button {{action 'addToQueue' searchResult}}>Queue</button>
-			
 		{{/each}}
 
 	</div>
