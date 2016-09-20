@@ -4,6 +4,13 @@
     margin: 0px;
 }
 
+#header {
+    height: 30px;
+    padding: 7px;
+    background: #f3f4f8;
+    width: 100%;
+}
+
 input[type="text"] {
   padding: 10px;
   margin-bottom: 5px;
@@ -84,21 +91,15 @@ ul {
     vertical-align: top;
 }
 
-.song-tile .button-group {
-    float: right;
-}
-
-.button-group {
-    float: right;
-}
-
-a.button {
-    display: block;
+div.button {
+    display: inline-block;
     text-align: center;
     height: 70px;
-    width: 55px;
+    width: 57px;
     margin-left: 2px;
     background: #f3f4f8;
+    cursor: pointer;
+    float: left;
 }
 
 .track-info {
@@ -115,6 +116,17 @@ a.button {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.current-song-info {
+    background: #f3f4f8;
+    padding: 5px;
+    width: 340px;
+    margin-top: 5px;
+}
+
+.track-list {
+    width: 100%;
 }
 
 li.song-tile {
