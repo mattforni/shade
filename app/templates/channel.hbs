@@ -1,30 +1,21 @@
 <div id="header">
 	<h2>Shade &rang; {{#link-to 'channels'}}Channels{{/link-to}} &rang; {{#link-to 'channel' model}}{{model.channel_name}}{{/link-to}}</h2>
 </div>
-
 <div id="background" style="background-image:url({{model.current_track.album_art_url}}">
-
 	<div class="content">
-
 		<div id="current-song-container">
-			<!--
-			<div>
-				<h4 id="current-song-header">{{model.current_track.name}}</h4>
-			</div>
-			-->
 			<img class="current-song" src="{{model.current_track.album_art_url}}">
 			<div class="current-song-info">
 				<h3>{{model.current_track.name}}</h3>
 				<label>{{model.current_track.artist}}</label>
 			</div>
 		</div>
-
 		<div id="playlist-container">
 			<form>
 				{{input value=searchBox placeholder="Search for songs or artist" key-up="search"}}
 			</form>
 			<ul>
-				{{#each model.tracks as |track|}}
+				{{#each sortedTracks as |track|}}
 					<li class="song-tile">
 						<div class="track-list">
 							<div class="track-image">
@@ -47,12 +38,9 @@
 				{{/each}}
 			</ul>
 		</div>
-
 		{{#each searchResults as |searchResult|}}
 			<h4>{{searchResult.title}} - {{searchResult.user.username}}</h4>
 			<button {{action 'addToQueue' searchResult}}>Queue</button>
 		{{/each}}
-
 	</div>
-
 </div>

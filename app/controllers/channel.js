@@ -2,8 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-	searchResults:[],
-	isPlaying:true,
 	init: function () {
 	    this._super();
 	    Ember.run.schedule("afterRender", this, function() {
@@ -13,6 +11,9 @@ export default Ember.Controller.extend({
 	    	}
 	    });
 	},
+	searchResults: [],
+	sortBy: ['votes:desc'],
+	sortedTracks: Ember.computed.sort('model.tracks', 'sortBy'),
 	selectTrack: function(track, play, seek = 0) {
 
 		if (track != null) {
@@ -50,30 +51,20 @@ export default Ember.Controller.extend({
 				channel.save();
 			});
 
+			self.store.find('track', track.get('id')).then(function (_track) {
+  				_track.destroyRecord();
+			});
+
 			SC.streamStopAll();
 			var self = this;
 			if (play == null) {
 				play = true;
 			}
 
-		    //self.get('model.tracks').setEach('playingTrack', false);
-		    //self.set('isBuffering', true);
-		    //track.set('playingTrack', true);
-		    //trackIndex = this.get('sortedTracks').indexOf(track);
-		    //nextTrack = self.get('sortedTracks').objectAt(trackIndex + 1);
-		    //prevTrack = self.get('sortedTracks').objectAt(trackIndex - 1);
-		    /*
-		    this.setProperties({
-		      prevTrack: prevTrack,
-		      nextTrack: nextTrack
-		    });
-		    */
-
 		    SC.initialize({
 		      client_id: '4963dd1155eaea4e29b885d7ee1422ce',
 		      redirect_uri: '#'
 		    });
-
 
 			return SC.stream('/tracks/' + track.get('stream_id'), {
 			    whileplaying: function() {
@@ -141,7 +132,6 @@ export default Ember.Controller.extend({
 		upVote: function(song) {
 			this.store.findRecord('track', song.id).then(function(track) {
 				var previous = track.get('votes');
-				console.log(track);
 				var v = (previous != null ? previous : 0) + 1;
 				track.set('votes', v);
 				track.save();
