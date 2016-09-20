@@ -1,4 +1,6 @@
-<h2>{{model.channel_name}}</h2>
+<div id="header">
+	<h2>Shade &rang; {{#link-to 'channels'}}Channels{{/link-to}} &rang; {{#link-to 'channel' model}}{{model.channel_name}}{{/link-to}}</h2>
+</div>
 
 <div id="background" style="background-image:url({{model.current_track.album_art_url}}">
 
@@ -11,6 +13,10 @@
 			</div>
 			-->
 			<img class="current-song" src="{{model.current_track.album_art_url}}">
+			<div class="current-song-info">
+				<h3>{{model.current_track.name}}</h3>
+				<label>{{model.current_track.artist}}</label>
+			</div>
 		</div>
 
 		<div id="playlist-container">
@@ -20,7 +26,7 @@
 			<ul>
 				{{#each model.tracks as |track|}}
 					<li class="song-tile">
-						<div>
+						<div class="track-list">
 							<div class="track-image">
 								{{#if track.album_art_url}}
 									<img src="{{track.album_art_url}}">
