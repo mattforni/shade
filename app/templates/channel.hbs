@@ -1,16 +1,16 @@
 <h2>{{model.channel_name}}</h2>
 
-<div id="background" style="background-image:url({{currentTrack.album_art_url}}">
+<div id="background" style="background-image:url({{model.current_track.album_art_url}}">
 
 	<div class="content">
 
 		<div id="current-song-container">
 			<!--
 			<div>
-				<h4 id="current-song-header">{{currentTrack.name}}</h4>
+				<h4 id="current-song-header">{{model.current_track.name}}</h4>
 			</div>
 			-->
-			<img class="current-song" src="{{currentTrack.album_art_url}}">
+			<img class="current-song" src="{{model.current_track.album_art_url}}">
 		</div>
 
 		<div id="playlist-container">

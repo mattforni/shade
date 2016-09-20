@@ -3,19 +3,13 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
 	searchResults:[],
-	currentTrack:null,
 	isPlaying:true,
 	init: function () {
 	    this._super();
 	    Ember.run.schedule("afterRender", this, function() {
-	    	var channel = this.get('model');
-	    	var current_track_id = channel.get('current_track_id');
-	    	var current_track_start_ts = channel.get('current_track_start_ts');
-	    	var self = this;
-	    	if (current_track_id != null) {
-	    		var track = this.store.findRecord('track', current_track_id).then(function(track) {
-		    		self.selectTrack(track, true, current_track_start_ts);
-	    		});
+	    	var current_track = this.get('model.current_track');
+	    	if (current_track.id != null) {
+		    	this.selectTrack(current_track, true);
 	    	}
 	    });
 	},
@@ -24,26 +18,44 @@ export default Ember.Controller.extend({
 		if (track != null) {
 
 			console.log('playing: ' + track.get('name') + ' at ' + seek + 'ms');
+			var self = this;
 
-			var current_track_id = track.get('id');
 			var channel = this.get('model');
-			channel.set('current_track_id', current_track_id);
-			channel.save();
 
-			/*
-			this.store.findRecord('channel', this.get('model.id')).then(function(channel) {
-			var current_track_id = track.get('id');
-			channel.set('current_track_id', current_track_id);
-			channel.save();
+			channel.get('current_track').then(function(_track) {
+				if (_track == null) {
+					var current_track = self.store.createRecord('current-track', {
+						id: channel.get('id'),
+						start_stream_ts: new Date().getTime(),
+						name: track.get('name'),
+						stream_id: track.get('stream_id'),
+						artist: track.get('artist'),
+						album: track.get('album'),
+						album_art_url: track.get('album_art_url'),
+						votes: track.get('votes')
+					});
+				} else {
+					_track.set('start_stream_ts', new Date().getTime()),
+					_track.set('name', track.get('name'));
+					_track.set('stream_id', track.get('stream_id'));
+					_track.set('artist', track.get('artist'));
+					_track.set('album', track.get('album_art_url'));
+					_track.set('album_art_url', track.get('album_art_url'));
+					_track.set('votes', track.get('votes'));
+					current_track = _track;
+				}
+
+				channel.set('current_track', current_track);
+				current_track.save();
+				channel.save();
 			});
-			*/
 
 			SC.streamStopAll();
-			this.set('currentTrack', track);
 			var self = this;
 			if (play == null) {
 				play = true;
 			}
+
 		    //self.get('model.tracks').setEach('playingTrack', false);
 		    //self.set('isBuffering', true);
 		    //track.set('playingTrack', true);
@@ -56,6 +68,7 @@ export default Ember.Controller.extend({
 		      nextTrack: nextTrack
 		    });
 		    */
+
 		    SC.initialize({
 		      client_id: '4963dd1155eaea4e29b885d7ee1422ce',
 		      redirect_uri: '#'
@@ -137,9 +150,7 @@ export default Ember.Controller.extend({
 	}
 });
 
-
 /*
-
 	channel: function(params) {
 		var join_ts = new Date().getTime();
 		var channel = this.store.findRecord('channel', params.channel_id);
@@ -152,6 +163,4 @@ export default Ember.Controller.extend({
 
 		return channel;
 	}
-
-
 */
