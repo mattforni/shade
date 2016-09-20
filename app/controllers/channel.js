@@ -5,20 +5,24 @@ export default Ember.Controller.extend({
 	init: function () {
 	    this._super();
 	    Ember.run.schedule("afterRender", this, function() {
-	    	var current_track = this.get('model.current_track');
-	    	if (current_track.id != null) {
-		    	this.selectTrack(current_track, true);
-	    	}
+	    	var self = this;
+	    	this.get('model.current_track').then(function(_current_track) {
+		    	if (_current_track.id != null) {
+		    		console.log('Resuming playback for: ' + _current_track.get('name'));
+			    	self.selectTrack(_current_track, true);
+		    	}
+	    	});
 	    });
 	},
 	searchResults: [],
-	sortBy: ['votes:desc'],
-	sortedTracks: Ember.computed.sort('model.tracks', 'sortBy'),
-	selectTrack: function(track, play, seek = 0) {
+	sortByVotes: ['votes:desc'],
+	sortedTracks: Ember.computed.sort('model.tracks', 'sortByVotes'),
+	selectTrack: function(track, resume, seek = 0) {
+
 
 		if (track != null) {
 
-			console.log('playing: ' + track.get('name') + ' at ' + seek + 'ms');
+			console.log('Playing: ' + track.get('name') + ', Starting at ' + seek + 'ms');
 			var self = this;
 
 			var channel = this.get('model');
@@ -51,15 +55,17 @@ export default Ember.Controller.extend({
 				channel.save();
 			});
 
-			self.store.find('track', track.get('id')).then(function (_track) {
-  				_track.destroyRecord();
-			});
+			if (!resume) {
+				console.log('not resume');
+				self.store.find('track', track.get('id')).then(function (_track) {
+	  				_track.destroyRecord();
+	  				channel.get('tracks').removeObject(_track);
+	  				channel.save();
+				});
+			}
 
 			SC.streamStopAll();
 			var self = this;
-			if (play == null) {
-				play = true;
-			}
 
 		    SC.initialize({
 		      client_id: '4963dd1155eaea4e29b885d7ee1422ce',
@@ -81,7 +87,7 @@ export default Ember.Controller.extend({
 				    var nextTrack = tracks.objectAt(0);
 			        console.log("nextTrack: " + nextTrack);
 			        if (nextTrack != null) {
-			        	return self.selectTrack(nextTrack, true);
+			        	return self.selectTrack(nextTrack, false);
 			        }
 			    }
 			}, function(sound) {
@@ -104,7 +110,7 @@ export default Ember.Controller.extend({
 			}
 		},
 		playTrack: function(song) {
-			this.selectTrack(song, true);
+			this.selectTrack(song, false);
 		},
 		addToQueue: function(song) {
 			var channel = this.get('model');
